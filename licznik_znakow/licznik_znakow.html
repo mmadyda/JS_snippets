@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        textarea {
+            width: 90%;
+            height: 50px;
+            background: silver;
+        }
+    </style>
+</head>
+<body>
+    <textarea name="" id="area"></textarea>
+    <div>
+        <p>Ilość znaków: <span id="characters"></span></p>
+        <p>Ilość znaków bez spacji: <span id="characters-no-spaces"></span></p>
+        <p>Ilość słów <span id="words"></span></p>
+        <p>Ilość słów <span id="sentences"></span></p>
+    </div>
+
+    <script>
+        let textarea = document.getElementById("area")
+
+        textarea.addEventListener("input", onChange);
+
+
+        function onChange(e) {
+            const text = textarea.value;
+            const numCharacters = text.length;
+            const numCharactersNoSpaces = text.replace(/[\r\n ]/g, "").length
+            const numWords = text.replace(/[\r\n ]/g, " ").split(" ").length
+            const numSentences = text.split(".").length
+
+            document.getElementById("characters").innerHTML = numCharacters;
+            document.getElementById("characters-no-spaces").innerHTML = numCharactersNoSpaces;
+            document.getElementById("words").innerHTML = numWords;
+            document.getElementById("sentences").innerHTML = numSentences
+        }
+    </script>
+</body>
+</html>
