@@ -38,6 +38,18 @@
             let json = JSON.parse(data);
             console.log(json);
         })
+
+        async function getData() {
+            try {
+                const response = await fetch("https://api.chucknorris.io/jokes/random");
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getData();
     </script>
 </body>
 </html>
