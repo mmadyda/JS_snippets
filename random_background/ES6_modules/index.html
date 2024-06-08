@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="test-modules.js"></script>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+<body>
+    <script type="module">
+        import * as myModule from "./test-modules.js"
+        console.log(myModule);
+
+        console.log(myModule.value);
+        console.log(myModule.testValue);
+
+
+        import {getData, testValue, Person, add as addition} from "./test-modules.js"
+
+        console.log(getData());
+
+        const person = new Person("Kasia")
+        console.log(person);
+        console.log(addition(2,10));
+
+        import defaultExport from "./test-modules.js"
+        console.log(defaultExport);
+
+        import defaultExport2, {multiply as multi} from "./test-modules.js"
+        console.log(defaultExport2);
+        console.log(multi(3,10));
+
+    </script>
+</body>
+</html>
+
+
