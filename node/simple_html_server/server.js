@@ -6,7 +6,7 @@ http.createServer(
     function (req, res) {
         const pathname = url.parse(req.url, true).pathname;
         const filename = "./static" + pathname;
-        
+
         fs.readFile(filename, function(err, data){
             if(err) {
                 res.writeHead(404, {"Content-type" : "text/html"})
