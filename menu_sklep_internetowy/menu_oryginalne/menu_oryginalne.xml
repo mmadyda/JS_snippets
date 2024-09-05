@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?><iai:component><iai:componentsdata><cdata-start/>
+	<iaixsl:variable name="dlmenu_showall">+ <iai:variable vid="Pokaż wszystkie"/></iaixsl:variable>
+	<iaixsl:variable name="dlmenu_extend">+ <iai:variable vid="Rozwiń"/></iaixsl:variable>
+	<iaixsl:variable name="dlmenu_hide">- <iai:variable vid="Zwiń"/></iaixsl:variable>
+	<iaixsl:variable name="gfx_2lvl_show">1</iaixsl:variable>
+	<iaixsl:variable name="gfx_3lvl_show">1</iaixsl:variable>
+	<iaixsl:variable name="menu_categories_label"></iaixsl:variable>
+	<iaixsl:variable name="dlmenu_showmore">1</iaixsl:variable>
+	<iaixsl:variable name="dlmenu_shownumber">10</iaixsl:variable>
+	<iaixsl:variable name="dlmenu_showall_count">0</iaixsl:variable>
+	<iaixsl:variable name="current_item"><iaixsl:value-of select="/shop/navigation/current/@ni"/></iaixsl:variable>
+
+	<nav id="menu_categories" class="wide">
+		<iaixsl:if test="$menu_categories_label and not($menu_categories_label = '')">
+			<h2 class="big_label">
+				<a href="/categories.php">
+					<iaixsl:attribute name="title"></iaixsl:attribute>
+					<iaixsl:value-of select="$menu_categories_label"/>
+				</a>
+			</h2>
+		</iaixsl:if>
+		<button type="button" class="navbar-toggler">
+		  <iaixsl:attribute name="aria-label"><iai:variable vid="Menu"/></iaixsl:attribute>
+			<i class="icon-reorder"/>
+		</button>
+		<div class="navbar-collapse" id="menu_navbar">
+			<ul class="navbar-nav mx-md-n2">
+				<iaixsl:for-each select="navigation/item">
+					<li class="nav-item">
+						<iaixsl:if test="( (@ni = $current_item) or (item/@ni = $current_item)  or (item/item/@ni = $current_item)  or (item/item/item/@ni = $current_item) )">
+							<iaixsl:attribute name="class"><![CDATA[nav-item nav-open]]></iaixsl:attribute>
+						</iaixsl:if>
+						<iaixsl:variable name="navLink">
+							<iaixsl:choose>
+								<iaixsl:when test="@link and @link != '##'">
+									<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;a  href="]]></iaixsl:text>
+									<iaixsl:value-of select="@link"/><iaixsl:text disable-output-escaping="yes"><![CDATA[" target="]]></iaixsl:text><iaixsl:value-of select="@target"/>
+									<iaixsl:text disable-output-escaping="yes"><![CDATA[" title="]]></iaixsl:text><iaixsl:value-of select="@name"/>
+								</iaixsl:when>
+								<iaixsl:otherwise>
+									<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;span]]></iaixsl:text>
+									<iaixsl:text disable-output-escaping="yes"><![CDATA[ title="]]></iaixsl:text>
+									<iaixsl:value-of select="@name"/>
+								</iaixsl:otherwise>
+							</iaixsl:choose>
+							<iaixsl:text disable-output-escaping="yes"><![CDATA[" class="nav-link]]></iaixsl:text>
+							<iaixsl:if test="(@ni = /shop/navigation/current/@ni) or (item//@ni = /shop/navigation/current/@ni)">
+								<iaixsl:text disable-output-escaping="yes"><![CDATA[ active]]></iaixsl:text>
+							</iaixsl:if>
+							<iaixsl:if test="@reload and @reload = 'y'">
+								<iaixsl:text disable-output-escaping="yes"><![CDATA[ noevent]]></iaixsl:text>
+							</iaixsl:if>
+							<iaixsl:if test="((@gfx_inactive_type = 'img' and @gfx) or (@gfx_inactive_type = 'img_rwd' and (@gfx_inactive_desktop or @gfx_inactive_tablet or @gfx_inactive_mobile))) or ((@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile)))">
+								<iaixsl:text disable-output-escaping="yes"><![CDATA[ nav-gfx]]></iaixsl:text>
+								<iaixsl:if test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+									<iaixsl:text disable-output-escaping="yes"><![CDATA[ nav-hover]]></iaixsl:text>
+								</iaixsl:if>
+							</iaixsl:if>
+							<iaixsl:text disable-output-escaping="yes"><![CDATA[" &gt;]]></iaixsl:text>
+							<iaixsl:choose>
+								<iaixsl:when test="(@gfx_inactive_type = 'img' and @gfx) or (@gfx_inactive_type = 'img_rwd' and (@gfx_inactive_desktop or @gfx_inactive_tablet or @gfx_inactive_mobile))">
+									<picture class="nav-picture --main --lvl1">
+										<iaixsl:choose>
+											<iaixsl:when test="@gfx_inactive_type = 'img_rwd'">
+												<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_inactive_desktop}"/>
+												<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_inactive_tablet}"/>
+												<img alt="{@name}" title="{@name}" src="{@gfx_inactive_mobile}" loading="lazy"/>
+											</iaixsl:when>
+											<iaixsl:otherwise>
+												<img alt="{@name}" title="{@name}" src="{@gfx}" loading="lazy"/>
+											</iaixsl:otherwise>
+										</iaixsl:choose>
+									</picture>
+									<iaixsl:if test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+										<picture class="nav-picture --hover --lvl1">
+											<iaixsl:choose>
+												<iaixsl:when test="@gfx_omo_type = 'img_rwd'">
+													<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_omo_desktop}"/>
+													<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_omo_tablet}"/>
+													<img alt="{@name}" title="{@name}" src="{@gfx_omo_mobile}" loading="lazy"/>
+												</iaixsl:when>
+												<iaixsl:otherwise>
+													<img alt="{@name}" title="{@name}" src="{@gfx_onmouseover}" loading="lazy"/>
+												</iaixsl:otherwise>
+											</iaixsl:choose>
+										</picture>
+									</iaixsl:if>
+									<span class="gfx_lvl_1 d-none"><iaixsl:value-of disable-output-escaping="yes" select="@name"/></span>
+								</iaixsl:when>
+								<iaixsl:when test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+									<span class="gfx_lvl_1 --omo"><iaixsl:value-of disable-output-escaping="yes" select="@name"/></span>
+									<picture class="nav-picture --hover --lvl1">
+										<iaixsl:choose>
+											<iaixsl:when test="@gfx_omo_type = 'img_rwd'">
+												<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_omo_desktop}"/>
+												<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_omo_tablet}"/>
+												<img alt="{@name}" title="{@name}" src="{@gfx_omo_mobile}" loading="lazy"/>
+											</iaixsl:when>
+											<iaixsl:otherwise>
+												<img alt="{@name}" title="{@name}" src="{@gfx_onmouseover}" loading="lazy"/>
+											</iaixsl:otherwise>
+										</iaixsl:choose>
+									</picture>
+								</iaixsl:when>
+								<iaixsl:otherwise>
+									<iaixsl:value-of disable-output-escaping="yes" select="@name"/>
+								</iaixsl:otherwise>
+							</iaixsl:choose>
+							<iaixsl:choose>
+								<iaixsl:when test="@link and @link != '##'">
+									<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;/a&gt;]]></iaixsl:text>
+								</iaixsl:when>
+								<iaixsl:otherwise>
+									<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;/span&gt;]]></iaixsl:text>
+								</iaixsl:otherwise>
+							</iaixsl:choose>
+						</iaixsl:variable>
+						<iaixsl:copy-of select="$navLink"/>
+						<iaixsl:if test="item">
+							<ul class="navbar-subnav">
+								<li class="nav-header">
+									<a href="#backLink" class="nav-header__backLink"><i class="icon-angle-left"></i></a>
+									<iaixsl:copy-of select="$navLink"/>
+								</li>
+								<iaixsl:for-each select="item">
+									<li class="nav-item">
+										<iaixsl:if test="((count(item) = 0) and $dlmenu_showmore)">
+											<iaixsl:attribute name="class"><![CDATA[nav-item empty]]></iaixsl:attribute>
+										</iaixsl:if>
+										<iaixsl:if test="( (@ni = $current_item) or (item/@ni = $current_item)  or (item/item/@ni = $current_item)  or (item/item/item/@ni = $current_item) )">
+											<iaixsl:attribute name="class"><![CDATA[nav-item nav-open]]></iaixsl:attribute>
+										</iaixsl:if>
+										<iaixsl:if test="( (@ni = $current_item) or (item/@ni = $current_item)  or (item/item/@ni = $current_item)  or (item/item/item/@ni = $current_item) ) and ((count(item) = 0) and $dlmenu_showmore)">
+											<iaixsl:attribute name="class"><![CDATA[nav-item nav-open empty]]></iaixsl:attribute>
+										</iaixsl:if>
+										<iaixsl:variable name="navLinkSub">
+											<iaixsl:choose>
+												<iaixsl:when test="@link and @link != '##'">
+													<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;a  href="]]></iaixsl:text>
+													<iaixsl:value-of select="@link"/><iaixsl:text disable-output-escaping="yes"><![CDATA[" target="]]></iaixsl:text><iaixsl:value-of select="@target"/>
+													<iaixsl:text disable-output-escaping="yes"><![CDATA[" title="]]></iaixsl:text><iaixsl:value-of select="@name"/>
+												</iaixsl:when>
+												<iaixsl:otherwise>
+													<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;span]]></iaixsl:text>
+													<iaixsl:text disable-output-escaping="yes"><![CDATA[ title="]]></iaixsl:text>
+													<iaixsl:value-of select="@name"/>
+												</iaixsl:otherwise>
+											</iaixsl:choose>
+											<iaixsl:text disable-output-escaping="yes"><![CDATA[" class="nav-link]]></iaixsl:text>
+											<iaixsl:if test="(@ni = /shop/navigation/current/@ni) or (item//@ni = /shop/navigation/current/@ni)">
+												<iaixsl:text disable-output-escaping="yes"><![CDATA[ active]]></iaixsl:text>
+											</iaixsl:if>
+											<iaixsl:if test="(((@gfx_inactive_type = 'img' and @gfx) or (@gfx_inactive_type = 'img_rwd' and (@gfx_inactive_desktop or @gfx_inactive_tablet or @gfx_inactive_mobile))) or ((@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile)))) and $gfx_2lvl_show">
+												<iaixsl:text disable-output-escaping="yes"><![CDATA[ nav-gfx]]></iaixsl:text>
+												<iaixsl:if test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+													<iaixsl:text disable-output-escaping="yes"><![CDATA[ nav-hover]]></iaixsl:text>
+												</iaixsl:if>
+											</iaixsl:if>
+
+											<iaixsl:text disable-output-escaping="yes"><![CDATA[" &gt;]]></iaixsl:text>
+
+											<iaixsl:choose>
+												<iaixsl:when test="((@gfx_inactive_type = 'img' and @gfx) or (@gfx_inactive_type = 'img_rwd' and (@gfx_inactive_desktop or @gfx_inactive_tablet or @gfx_inactive_mobile))) and $gfx_2lvl_show">
+													<picture class="nav-picture --main --lvl2">
+														<iaixsl:choose>
+															<iaixsl:when test="@gfx_inactive_type = 'img_rwd'">
+																<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_inactive_desktop}"/>
+																<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_inactive_tablet}"/>
+																<img alt="{@name}" title="{@name}" src="{@gfx_inactive_mobile}" loading="lazy"/>
+															</iaixsl:when>
+															<iaixsl:otherwise>
+																<img alt="{@name}" title="{@name}" src="{@gfx}" loading="lazy"/>
+															</iaixsl:otherwise>
+														</iaixsl:choose>
+													</picture>
+													<iaixsl:if test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+														<picture class="nav-picture --hover --lvl2">
+															<iaixsl:choose>
+																<iaixsl:when test="@gfx_omo_type = 'img_rwd'">
+																	<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_omo_desktop}"/>
+																	<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_omo_tablet}"/>
+																	<img alt="{@name}" title="{@name}" src="{@gfx_omo_mobile}" loading="lazy"/>
+																</iaixsl:when>
+																<iaixsl:otherwise>
+																	<img alt="{@name}" title="{@name}" src="{@gfx_onmouseover}" loading="lazy"/>
+																</iaixsl:otherwise>
+															</iaixsl:choose>
+														</picture>
+													</iaixsl:if>
+													<span class="gfx_lvl_2 d-none"><iaixsl:value-of disable-output-escaping="yes" select="@name"/></span>
+												</iaixsl:when>
+												<iaixsl:when test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+													<span class="gfx_lvl_2 --omo"><iaixsl:value-of disable-output-escaping="yes" select="@name"/></span>
+													<picture class="nav-picture --hover --lvl2">
+														<iaixsl:choose>
+															<iaixsl:when test="@gfx_omo_type = 'img_rwd'">
+																<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_omo_desktop}"/>
+																<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_omo_tablet}"/>
+																<img alt="{@name}" title="{@name}" src="{@gfx_omo_mobile}" loading="lazy"/>
+															</iaixsl:when>
+															<iaixsl:otherwise>
+																<img alt="{@name}" title="{@name}" src="{@gfx_onmouseover}" loading="lazy"/>
+															</iaixsl:otherwise>
+														</iaixsl:choose>
+													</picture>
+												</iaixsl:when>
+												<iaixsl:otherwise>
+													<iaixsl:value-of disable-output-escaping="yes" select="@name"/>
+												</iaixsl:otherwise>
+											</iaixsl:choose>
+											<iaixsl:choose>
+												<iaixsl:when test="@link and @link != '##'">
+													<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;/a&gt;]]></iaixsl:text>
+												</iaixsl:when>
+												<iaixsl:otherwise>
+													<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;/span&gt;]]></iaixsl:text>
+												</iaixsl:otherwise>
+											</iaixsl:choose>
+										</iaixsl:variable>
+										<iaixsl:copy-of select="$navLinkSub"/>
+										<iaixsl:if test="item">
+											<ul class="navbar-subsubnav">
+												<iaixsl:if test="((count(item) &gt; $dlmenu_shownumber) and $dlmenu_showmore)">
+													<iaixsl:attribute name="class"><![CDATA[navbar-subsubnav more]]></iaixsl:attribute>
+												</iaixsl:if>
+												<li class="nav-header">
+													<a href="#backLink" class="nav-header__backLink"><i class="icon-angle-left"></i></a>
+													<iaixsl:copy-of select="$navLinkSub"/>
+												</li>
+												<iaixsl:for-each select="item">
+													<li class="nav-item">
+														<iaixsl:if test="( (@ni = $current_item) or (item/@ni = $current_item)  or (item/item/@ni = $current_item)  or (item/item/item/@ni = $current_item) )">
+															<iaixsl:attribute name="class"><![CDATA[nav-item nav-open]]></iaixsl:attribute>
+														</iaixsl:if>
+														<iaixsl:choose>
+															<iaixsl:when test="@link and @link != '##'">
+																<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;a  href="]]></iaixsl:text>
+																<iaixsl:value-of select="@link"/><iaixsl:text disable-output-escaping="yes"><![CDATA[" target="]]></iaixsl:text><iaixsl:value-of select="@target"/>
+																<iaixsl:text disable-output-escaping="yes"><![CDATA[" title="]]></iaixsl:text><iaixsl:value-of select="@name"/>
+															</iaixsl:when>
+															<iaixsl:otherwise>
+																<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;span]]></iaixsl:text>
+																<iaixsl:text disable-output-escaping="yes"><![CDATA[ title="]]></iaixsl:text>
+																<iaixsl:value-of select="@name"/>
+															</iaixsl:otherwise>
+														</iaixsl:choose>
+														<iaixsl:text disable-output-escaping="yes"><![CDATA[" class="nav-link]]></iaixsl:text>
+														<iaixsl:if test="(@ni = /shop/navigation/current/@ni) or (item//@ni = /shop/navigation/current/@ni)">
+															<iaixsl:text disable-output-escaping="yes"><![CDATA[ active]]></iaixsl:text>
+														</iaixsl:if>
+														<iaixsl:if test="(((@gfx_inactive_type = 'img' and @gfx) or (@gfx_inactive_type = 'img_rwd' and (@gfx_inactive_desktop or @gfx_inactive_tablet or @gfx_inactive_mobile))) or ((@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile)))) and $gfx_3lvl_show">
+															<iaixsl:text disable-output-escaping="yes"><![CDATA[ nav-gfx]]></iaixsl:text>
+															<iaixsl:if test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+																<iaixsl:text disable-output-escaping="yes"><![CDATA[ nav-hover]]></iaixsl:text>
+															</iaixsl:if>
+														</iaixsl:if>
+
+														<iaixsl:text disable-output-escaping="yes"><![CDATA[" &gt;]]></iaixsl:text>
+
+														<iaixsl:choose>
+															<iaixsl:when test="((@gfx_inactive_type = 'img' and @gfx) or (@gfx_inactive_type = 'img_rwd' and (@gfx_inactive_desktop or @gfx_inactive_tablet or @gfx_inactive_mobile))) and $gfx_3lvl_show">
+																<picture class="nav-picture --main --lvl3">
+																	<iaixsl:choose>
+																		<iaixsl:when test="@gfx_inactive_type = 'img_rwd'">
+																			<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_inactive_desktop}"/>
+																			<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_inactive_tablet}"/>
+																			<img alt="{@name}" title="{@name}" src="{@gfx_inactive_mobile}" loading="lazy"/>
+																		</iaixsl:when>
+																		<iaixsl:otherwise>
+																			<img alt="{@name}" title="{@name}" src="{@gfx}" loading="lazy"/>
+																		</iaixsl:otherwise>
+																	</iaixsl:choose>
+																</picture>
+																<iaixsl:if test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+																	<picture class="nav-picture --hover --lvl3">
+																		<iaixsl:choose>
+																			<iaixsl:when test="@gfx_omo_type = 'img_rwd'">
+																				<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_omo_desktop}"/>
+																				<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_omo_tablet}"/>
+																				<img alt="{@name}" title="{@name}" src="{@gfx_omo_mobile}" loading="lazy"/>
+																			</iaixsl:when>
+																			<iaixsl:otherwise>
+																				<img alt="{@name}" title="{@name}" src="{@gfx_onmouseover}" loading="lazy"/>
+																			</iaixsl:otherwise>
+																		</iaixsl:choose>
+																	</picture>
+																</iaixsl:if>
+																<span class="gfx_lvl_3 d-none"><iaixsl:value-of disable-output-escaping="yes" select="@name"/></span>
+															</iaixsl:when>
+															<iaixsl:when test="(@gfx_omo_type = 'img' and @gfx_onmouseover) or (@gfx_omo_type = 'img_rwd' and (@gfx_omo_desktop or @gfx_omo_tablet or @gfx_omo_mobile))">
+																<span class="gfx_lvl_3 --omo"><iaixsl:value-of disable-output-escaping="yes" select="@name"/></span>
+																<picture class="nav-picture --hover --lvl3">
+																	<iaixsl:choose>
+																		<iaixsl:when test="@gfx_omo_type = 'img_rwd'">
+																			<source media="(min-width: 979px)" type="image/jpeg" srcset="{@gfx_omo_desktop}"/>
+																			<source media="(min-width: 757px)" type="image/jpeg" srcset="{@gfx_omo_tablet}"/>
+																			<img alt="{@name}" title="{@name}" src="{@gfx_omo_mobile}" loading="lazy"/>
+																		</iaixsl:when>
+																		<iaixsl:otherwise>
+																			<img alt="{@name}" title="{@name}" src="{@gfx_onmouseover}" loading="lazy"/>
+																		</iaixsl:otherwise>
+																	</iaixsl:choose>
+																</picture>
+															</iaixsl:when>
+															<iaixsl:otherwise>
+																<iaixsl:value-of disable-output-escaping="yes" select="@name"/>
+															</iaixsl:otherwise>
+														</iaixsl:choose>
+													<iaixsl:choose>
+														<iaixsl:when test="@link and @link != '##'">
+															<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;/a&gt;]]></iaixsl:text>
+														</iaixsl:when>
+														<iaixsl:otherwise>
+															<iaixsl:text disable-output-escaping="yes"><![CDATA[&lt;/span&gt;]]></iaixsl:text>
+														</iaixsl:otherwise>
+													</iaixsl:choose>
+													</li>
+												</iaixsl:for-each>
+												<iaixsl:if test="(count(item) &gt; $dlmenu_showall_count) and @link and @display_all = 'y' and $dlmenu_showall">
+													<li class="nav-item --all">
+														<a class="nav-link">
+															<iaixsl:attribute name="href">
+																<iaixsl:choose>
+																	<iaixsl:when test="@display_all_link">
+																		<iaixsl:value-of select="@display_all_link"/>
+																	</iaixsl:when>
+																	<iaixsl:otherwise>
+																		<iaixsl:value-of select="@link"/>
+																	</iaixsl:otherwise>
+																</iaixsl:choose>
+															</iaixsl:attribute>
+															<iaixsl:value-of select="$dlmenu_showall"/>
+														</a>
+													</li>
+												</iaixsl:if>
+												<iaixsl:if test="(count(item) &gt; $dlmenu_shownumber) and $dlmenu_showmore">
+													<li class="nav-item --extend">
+														<a href="" class="nav-link">
+															<iaixsl:attribute name="txt_alt"><iaixsl:value-of select="$dlmenu_hide" /></iaixsl:attribute>
+															<iaixsl:value-of select="$dlmenu_extend" />
+														</a>
+													</li>
+												</iaixsl:if>
+											</ul>
+										</iaixsl:if>
+									</li>
+								</iaixsl:for-each>
+								<iaixsl:if test="(count(item) &gt; $dlmenu_showall_count) and @link and @display_all = 'y' and $dlmenu_showall">
+									<li class="nav-item --all empty">
+										<a class="nav-link">
+											<iaixsl:attribute name="href">
+												<iaixsl:choose>
+													<iaixsl:when test="@display_all_link">
+														<iaixsl:value-of select="@display_all_link"/>
+													</iaixsl:when>
+													<iaixsl:otherwise>
+														<iaixsl:value-of select="@link"/>
+													</iaixsl:otherwise>
+												</iaixsl:choose>
+											</iaixsl:attribute>
+											<iaixsl:value-of select="$dlmenu_showall"/>
+										</a>
+									</li>
+								</iaixsl:if>
+							</ul>
+						</iaixsl:if>
+					</li>
+				</iaixsl:for-each>
+			</ul>
+		</div>
+	</nav>
+	<iaixsl:if test="/shop/page/navigation/item/@gfx_active_desktop"> </iaixsl:if>
+<cdata-end/></iai:componentsdata></iai:component>
